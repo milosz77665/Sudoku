@@ -20,6 +20,8 @@ public class Interface extends JFrame {
     int[][] save_matrix = new int[9][9];
     JPanel panel;
     JLabel label;
+    JLabel timer_text;
+    JLabel timer_time;
     Font font = new Font("Arial", Font.BOLD, 30);
     Font font2 = new Font("Arial", Font.BOLD, 25);
     JButton check_button;
@@ -88,11 +90,14 @@ public class Interface extends JFrame {
 
 //                            Ustawienie nagłówka
                         if (choose_difficulty.getSelectedItem() == "Easy") {
-                            game = new JFrame("Sudoku-Easy");
+                            game = new JFrame("Sudoku - Easy");
+                            Timer(0);
                         } else if (choose_difficulty.getSelectedItem() == "Normal") {
-                            game = new JFrame("Sudoku-Normal");
+                            Timer(1);
+                            game = new JFrame("Sudoku - Normal");
                         } else {
-                            game = new JFrame("Sudoku-Hard");
+                            Timer(2);
+                            game = new JFrame("Sudoku - Hard");
                         }
 //                            Generowanie Sudoku
                         generateSudoku();
@@ -143,6 +148,8 @@ public class Interface extends JFrame {
                         game.setSize(470, 700);
                         game.setLocationRelativeTo(null);
                         game.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        panel.add(timer_text);
+                        panel.add(timer_time);
                         panel.add(sudoku, BorderLayout.LINE_START);
                         panel.add(check_button, BorderLayout.AFTER_LINE_ENDS);
                         panel.add(label, BorderLayout.SOUTH);
@@ -285,6 +292,15 @@ public class Interface extends JFrame {
                 }
             }
         list.add(save_matrix);
+    }
+    // Licznik czasu
+    public void Timer(int time){
+        int minuty = 0;
+        int sekundy = 0;
+        timer_text = new JLabel("Time: ");
+        timer_text.setFont(font2);
+        timer_time = new JLabel(minuty + ":" + sekundy);
+        timer_time.setFont(font2);
     }
 
 
