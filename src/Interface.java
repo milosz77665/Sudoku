@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
-
 public class Interface extends JFrame {
     public String[] difficulty = {"Easy", "Normal", "Hard"};
     public Integer difficulty_int = 0; // 0 - easy, 1 - normal, 2 - hard
@@ -22,7 +21,9 @@ public class Interface extends JFrame {
     JPanel panel;
     JLabel label;
     Font font = new Font("Arial", Font.BOLD, 30);
+    Font font2 = new Font("Arial", Font.BOLD, 25);
     JButton check_button;
+
     public void startScreen() {
         //Tworzenie okna programu
         JFrame start_screen = new JFrame("Sudoku");
@@ -118,7 +119,7 @@ public class Interface extends JFrame {
 //                            Ustawienia wizualne
 
                         sudoku.setFont(font);
-                        label.setFont(font);
+                        label.setFont(font2);
                         JTextField text_field = new JTextField();
                         text_field.setFont(font);
                         text_field.setHorizontalAlignment(JTextField.CENTER);
@@ -139,12 +140,12 @@ public class Interface extends JFrame {
                         check_button.setActionCommand("answer");
 //                            Ustawienia okna
 
-                        game.setSize(600, 700);
+                        game.setSize(470, 700);
                         game.setLocationRelativeTo(null);
                         game.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        panel.add(sudoku,BorderLayout.LINE_START);
-                        panel.add(check_button,BorderLayout.AFTER_LINE_ENDS);
-                        panel.add(label,BorderLayout.SOUTH);
+                        panel.add(sudoku, BorderLayout.LINE_START);
+                        panel.add(check_button, BorderLayout.AFTER_LINE_ENDS);
+                        panel.add(label, BorderLayout.SOUTH);
                         game.add(panel);
 
                         game.setVisible(true);
@@ -180,7 +181,7 @@ public class Interface extends JFrame {
                         String action = solve.getActionCommand();
                         if (action.equals("answer")) {
 //                            sudoku.isCellEditable(9,9);
-                            int count=0;
+                            int count = 0;
 
 
                             for (int e = 0; e < empty_cells.size(); e = e + 2) {
@@ -195,7 +196,7 @@ public class Interface extends JFrame {
 //                                        sudoku.getModel().setValueAt("❌ ️",empty_cells.get(e),empty_cells.get(e+1));
                                         sudoku.getModel().setValueAt("", empty_cells.get(e), empty_cells.get(e + 1));
 ////                                        sudoku.setBackground(Color.red);
-                                    } else if(count==0){
+                                    } else if (count == 0) {
                                         label.setText("Nice. Sudoku was solved correctly!!");
                                         sudoku.setEnabled(false);
                                         check_button.setEnabled(false);
@@ -209,7 +210,7 @@ public class Interface extends JFrame {
                                     break;
                                 }
                             }
-                            if(count>0) {
+                            if (count > 0) {
                                 DrawSudoku(list.get(1));
                                 sudoku.setEnabled(false);
                                 check_button.setEnabled(false);
@@ -272,7 +273,8 @@ public class Interface extends JFrame {
         start_screen.setVisible(true);
 
     }
-// cos tam do zapisu macierzy w liscie
+
+    // cos tam do zapisu macierzy w liscie
     public void Save(int[][] matrix) {
         if (list.size() == 3) {
             list.remove(2);
@@ -291,7 +293,7 @@ public class Interface extends JFrame {
         JTable table = new JTable(9, 9);
         JPanel panel2 = new JPanel();
         JLabel label2 = new JLabel("Solution");
-        label2.setFont(font);
+        label2.setFont(font2);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 //                            Ustawienia wizualne
@@ -319,7 +321,8 @@ public class Interface extends JFrame {
         solution.add(panel2);
         solution.setVisible(true);
     }
-//    public void changeFont(){
+
+    //    public void changeFont(){
 //        JTextField text_field1 = new JTextField();
 //        Font font = new Font("Arial", Font.BOLD, 30);
 //        text_field1.setFont(font);
