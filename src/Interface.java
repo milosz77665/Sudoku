@@ -133,9 +133,9 @@ public class Interface extends JFrame {
                         t = new Timer(1000, new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                if(difficulty_int == 0){
+                                if (difficulty_int == 0) {
                                     sekundy = sekundy + 1;
-                                    if(sekundy > 59){
+                                    if (sekundy > 59) {
                                         minuty = minuty + 1;
                                         sekundy = sekundy - 60;
                                     }
@@ -241,40 +241,43 @@ public class Interface extends JFrame {
                     }
 
                     public void Solve(ActionEvent solve) {
-                        t.stop();
                         String action = solve.getActionCommand();
                         if (action.equals("answer")) {
 //                            sudoku.isCellEditable(9,9);
                             int count = 0;
+                            try {
 
+                                for (int e = 0; e < empty_cells.size(); e = e + 2) {
 
-                            for (int e = 0; e < empty_cells.size(); e = e + 2) {
+                                    sudoku.getValueAt(empty_cells.get(e), empty_cells.get(e + 1)).toString();
 
-                                try {
+                                }
+                                for (int e = 0; e < empty_cells.size(); e = e + 2) {
+
                                     String temp = sudoku.getValueAt(empty_cells.get(e), empty_cells.get(e + 1)).toString();
                                     Integer temp2 = Integer.valueOf(temp);
                                     if (temp2 != list.get(1)[empty_cells.get(e)][empty_cells.get(e + 1)]) {
                                         count++;
-//                                        System.out.println("zle");
                                         label.setText("Sudoku wasn't solved correctly!!");
-//                                        sudoku.getModel().setValueAt("❌ ️",empty_cells.get(e),empty_cells.get(e+1));
                                         sudoku.getModel().setValueAt("", empty_cells.get(e), empty_cells.get(e + 1));
-////                                        sudoku.setBackground(Color.red);
                                     } else if (count == 0) {
                                         label.setText("Nice. Sudoku was solved correctly!!");
+                                        t.stop();
                                         sudoku.setEnabled(false);
                                         check_button.setEnabled(false);
                                     }
 
-                                } catch (NullPointerException npe) {
-                                    JOptionPane.showMessageDialog(game,
-                                            "Please, fill all cells",
-                                            "Error",
-                                            JOptionPane.ERROR_MESSAGE);
-                                    break;
+
                                 }
+                            } catch (NullPointerException npe) {
+                                JOptionPane.showMessageDialog(game,
+                                        "Please, fill all cells",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE);
+
                             }
                             if (count > 0) {
+                                t.stop();
                                 DrawSudoku(list.get(1));
                                 sudoku.setEnabled(false);
                                 check_button.setEnabled(false);
@@ -294,7 +297,7 @@ public class Interface extends JFrame {
                         }
                     }
 
-                    public void SaveGame(ActionEvent save_game){
+                    public void SaveGame(ActionEvent save_game) {
                         String action = save_game.getActionCommand();
                         if (action.equals("Save Game")) {
                             Save();
@@ -306,8 +309,7 @@ public class Interface extends JFrame {
                                 writer.write(Arrays.deepToString(list.get(2)));
 
                                 writer.close();
-                            }
-                            catch (IOException ioException) {
+                            } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
                         }
@@ -378,8 +380,7 @@ public class Interface extends JFrame {
                 for (int c = 0; c < 9; c++) {
                     if (sudoku.getValueAt(r, c) == null) {
                         save_matrix[r][c] = 0;
-                    }
-                    else {
+                    } else {
                         save_matrix[r][c] = (int) sudoku.getValueAt(r, c);
                     }
                 }
