@@ -4,20 +4,17 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Interface extends JFrame {
     public String[] difficulty = {"Easy", "Normal", "Hard"};
     public Integer difficulty_int = 0; // 0 - easy, 1 - normal, 2 - hard
+    public int minuty = 0;
+    public int sekundy = 0;
     public ArrayList<int[][]> list;
     public JTable sudoku;
     int q = 0;
@@ -29,9 +26,10 @@ public class Interface extends JFrame {
     JLabel label;
     JLabel timer_text;
     JLabel timer_time;
+    Timer t;
     Font font = new Font("Arial", Font.BOLD, 30);
     Font font2 = new Font("Arial", Font.BOLD, 25);
-    JButton check_button, print_button, save_button;
+    JButton check_button, print_button;
 
     public void startScreen() {
         //Tworzenie okna programu
@@ -98,12 +96,18 @@ public class Interface extends JFrame {
 //                            Ustawienie nagłówka
                         if (choose_difficulty.getSelectedItem() == "Easy") {
                             game = new JFrame("Sudoku - Easy");
-                            Timer(0);
+                            difficulty_int = 0;
+                            minuty = 0;
+                            sekundy = 0;
                         } else if (choose_difficulty.getSelectedItem() == "Normal") {
-                            Timer(1);
+                            difficulty_int = 1;
+                            minuty = 9;
+                            sekundy = 59;
                             game = new JFrame("Sudoku - Normal");
                         } else {
-                            Timer(2);
+                            difficulty_int = 2;
+                            minuty = 4;
+                            sekundy = 59;
                             game = new JFrame("Sudoku - Hard");
                         }
 //                            Generowanie Sudoku
@@ -121,7 +125,24 @@ public class Interface extends JFrame {
                                 return non_editable;
                             }
                         };
-
+//                          Liczenie czasu
+                        t = new Timer(1000, new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                if(difficulty_int == 0){
+                                    sekundy = sekundy + 1;
+                                    if(sekundy > 59){
+                                        minuty = minuty + 1;
+                                        sekundy = sekundy - 60;
+                                    }
+                                }
+                                timer_time.setText(minuty + ":" + sekundy);
+                                System.out.println(minuty + ":" + sekundy);
+                            }
+                        });
+                        t.setRepeats(true);
+                        t.setCoalesce(true);
+                        t.start();
 
                         panel = new JPanel(new FlowLayout());
                         label = new JLabel();
@@ -155,12 +176,11 @@ public class Interface extends JFrame {
                         print_button = new JButton();
                         print_button.setText("Save as PNG");
                         print_button.addActionListener(this::SaveAsPNG);
-
-//                            Guzik do zapisywania gry
-                        save_button = new JButton();
-                        save_button.setText("Save Game");
-                        save_button.addActionListener(this::SaveGame);
-
+//                            Tekst licznika
+                        timer_text = new JLabel("Time: ");
+                        timer_text.setFont(font2);
+                        timer_time = new JLabel(minuty + ":" + sekundy);
+                        timer_time.setFont(font2);
 //                            Ustawienia okna
 
                         game.setSize(470, 700);
@@ -171,11 +191,17 @@ public class Interface extends JFrame {
                         panel.add(sudoku, BorderLayout.LINE_START);
                         panel.add(check_button, BorderLayout.AFTER_LINE_ENDS);
                         panel.add(print_button, BorderLayout.AFTER_LINE_ENDS);
-                        panel.add(save_button, BorderLayout.AFTER_LINE_ENDS);
                         panel.add(label, BorderLayout.SOUTH);
                         game.add(panel);
 
                         game.setVisible(true);
+//                          Listener okna
+                        WindowListener listener = new WindowAdapter() {
+                            public void windowClosing(WindowEvent evt) {
+                                t.stop();
+                            }
+                        };
+                        game.addWindowListener(listener);
 //                          Listener tabeli
                         sudoku.getModel().addTableModelListener(new TableModelListener() {
                             public void tableChanged(TableModelEvent e) {
@@ -205,6 +231,7 @@ public class Interface extends JFrame {
                     }
 
                     public void Solve(ActionEvent solve) {
+                        t.stop();
                         String action = solve.getActionCommand();
                         if (action.equals("answer")) {
 //                            sudoku.isCellEditable(9,9);
@@ -245,33 +272,14 @@ public class Interface extends JFrame {
                         }
                     }
 
-//                      Przycisk drukowania sudoku
                     public void SaveAsPNG(ActionEvent save_as_png) {
+                        t.stop();
                         String action = save_as_png.getActionCommand();
                         if (action.equals("Save as PNG")) {
                             try {
-                                getSaveSnapShot(sudoku, "sudoku.png");
+                                getSaveSnapShot(panel, "sudoku.png");
                             } catch (Exception exception) {
                                 exception.printStackTrace();
-                            }
-                        }
-                    }
-//                      Przycisk zapisywania gry
-                    public void SaveGame(ActionEvent save_game){
-                        String action = save_game.getActionCommand();
-                        if (action.equals("Save Game")) {
-                            Save();
-                            try {
-
-                                BufferedWriter writer = new BufferedWriter(new FileWriter("sudoku.txt"));
-                                writer.write(Arrays.deepToString(list.get(0)));
-                                writer.write(Arrays.deepToString(list.get(1)));
-                                writer.write(Arrays.deepToString(list.get(2)));
-
-                                writer.close();
-                            }
-                             catch (IOException ioException) {
-                                ioException.printStackTrace();
                             }
                         }
                     }
@@ -333,30 +341,16 @@ public class Interface extends JFrame {
     }
 
     // cos tam do zapisu macierzy w liscie
-    public void Save() {
+    public void Save(int[][] matrix) {
         if (list.size() == 3) {
             list.remove(2);
         } else
             for (int r = 0; r < 9; r++) {
                 for (int c = 0; c < 9; c++) {
-                    if (sudoku.getValueAt(r, c) == null) {
-                        save_matrix[r][c] = 0;
-                    }
-                    else {
                     save_matrix[r][c] = (int) sudoku.getValueAt(r, c);
-                    }
                 }
             }
         list.add(save_matrix);
-    }
-    // Licznik czasu
-    public void Timer(int time){
-        int minuty = 0;
-        int sekundy = 0;
-        timer_text = new JLabel("Time: ");
-        timer_text.setFont(font2);
-        timer_time = new JLabel(minuty + ":" + sekundy);
-        timer_time.setFont(font2);
     }
 
     // Zapisywanie screenshota
