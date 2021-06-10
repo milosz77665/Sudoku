@@ -6,8 +6,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Interface extends JFrame {
@@ -29,7 +33,7 @@ public class Interface extends JFrame {
     Timer t;
     Font font = new Font("Arial", Font.BOLD, 30);
     Font font2 = new Font("Arial", Font.BOLD, 25);
-    JButton check_button, print_button;
+    JButton check_button, print_button, save_button;
 
     public void startScreen() {
         //Tworzenie okna programu
@@ -176,6 +180,12 @@ public class Interface extends JFrame {
                         print_button = new JButton();
                         print_button.setText("Save as PNG");
                         print_button.addActionListener(this::SaveAsPNG);
+
+//                            Guzik do zapisywania gry
+                        save_button = new JButton();
+                        save_button.setText("Save Game");
+                        save_button.addActionListener(this::SaveGame);
+
 //                            Tekst licznika
                         timer_text = new JLabel("Time: ");
                         timer_text.setFont(font2);
@@ -191,6 +201,7 @@ public class Interface extends JFrame {
                         panel.add(sudoku, BorderLayout.LINE_START);
                         panel.add(check_button, BorderLayout.AFTER_LINE_ENDS);
                         panel.add(print_button, BorderLayout.AFTER_LINE_ENDS);
+                        panel.add(save_button, BorderLayout.AFTER_LINE_ENDS);
                         panel.add(label, BorderLayout.SOUTH);
                         game.add(panel);
 
@@ -284,6 +295,25 @@ public class Interface extends JFrame {
                         }
                     }
 
+                    public void SaveGame(ActionEvent save_game){
+                        String action = save_game.getActionCommand();
+                        if (action.equals("Save Game")) {
+                            Save();
+                            try {
+
+                                BufferedWriter writer = new BufferedWriter(new FileWriter("sudoku.txt"));
+                                writer.write(Arrays.deepToString(list.get(0)));
+                                writer.write(Arrays.deepToString(list.get(1)));
+                                writer.write(Arrays.deepToString(list.get(2)));
+
+                                writer.close();
+                            }
+                            catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        }
+                    }
+
                 });
 
                 set_difficulty.setLayout(null);
@@ -341,13 +371,18 @@ public class Interface extends JFrame {
     }
 
     // cos tam do zapisu macierzy w liscie
-    public void Save(int[][] matrix) {
+    public void Save() {
         if (list.size() == 3) {
             list.remove(2);
         } else
             for (int r = 0; r < 9; r++) {
                 for (int c = 0; c < 9; c++) {
-                    save_matrix[r][c] = (int) sudoku.getValueAt(r, c);
+                    if (sudoku.getValueAt(r, c) == null) {
+                        save_matrix[r][c] = 0;
+                    }
+                    else {
+                        save_matrix[r][c] = (int) sudoku.getValueAt(r, c);
+                    }
                 }
             }
         list.add(save_matrix);
