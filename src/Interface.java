@@ -140,6 +140,13 @@ public class Interface extends JFrame {
                                         sekundy = sekundy - 60;
                                     }
                                 }
+                                if(difficulty_int == 1 || difficulty_int == 2){
+                                    sekundy = sekundy - 1;
+                                    if(sekundy < 1){
+                                        minuty = minuty - 1;
+                                        sekundy = sekundy + 59;
+                                    }
+                                }
                                 timer_time.setText(minuty + ":" + sekundy);
                             }
                         });
