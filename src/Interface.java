@@ -141,7 +141,6 @@ public class Interface extends JFrame {
                                     }
                                 }
                                 timer_time.setText(minuty + ":" + sekundy);
-                                System.out.println(minuty + ":" + sekundy);
                             }
                         });
                         t.setRepeats(true);
