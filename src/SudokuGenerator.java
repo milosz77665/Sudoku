@@ -101,8 +101,8 @@ public class SudokuGenerator {
         list = gen.SudokuLoop();
         System.out.println("----------------pusta-----");
         gen.printNums(list.get(0));
+        System.out.println(list.get(0)[0][0]);
         System.out.println("---------------pełna------");
         gen.printNums(list.get(1));
-
     }
 }
