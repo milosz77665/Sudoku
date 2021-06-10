@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,7 +35,8 @@ public class Interface extends JFrame {
     Font font = new Font("Arial", Font.BOLD, 30);
     Font font2 = new Font("Arial", Font.BOLD, 25);
     JButton check_button, print_button, save_button;
-
+    SimpleDateFormat df = new SimpleDateFormat("mm:ss");
+    int timeLf = 0;
     public void startScreen() {
         //Tworzenie okna programu
         JFrame start_screen = new JFrame("Sudoku");
@@ -101,17 +103,15 @@ public class Interface extends JFrame {
                         if (choose_difficulty.getSelectedItem() == "Easy") {
                             game = new JFrame("Sudoku - Easy");
                             difficulty_int = 0;
-                            minuty = 0;
-                            sekundy = 0;
+                            timeLf=0;
                         } else if (choose_difficulty.getSelectedItem() == "Normal") {
                             difficulty_int = 1;
-                            minuty = 9;
-                            sekundy = 59;
+                            timeLf=600000;
                             game = new JFrame("Sudoku - Normal");
                         } else {
                             difficulty_int = 2;
-                            minuty = 4;
-                            sekundy = 59;
+                            timeLf=10000;
+//                            timeLf=300000;
                             game = new JFrame("Sudoku - Hard");
                         }
 //                            Generowanie Sudoku
@@ -134,20 +134,24 @@ public class Interface extends JFrame {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 if (difficulty_int == 0) {
-                                    sekundy = sekundy + 1;
-                                    if (sekundy > 59) {
-                                        minuty = minuty + 1;
-                                        sekundy = sekundy - 60;
-                                    }
+                                    timeLf=timeLf+1000;
+                                    timer_time.setText(df.format(timeLf));
+                                }else if(difficulty_int == 1 && timeLf>0){
+                                    timeLf=timeLf-1000;
+                                    timer_time.setText(df.format(timeLf));
+                                }else if (difficulty_int == 2&& timeLf>0){
+                                    timeLf=timeLf-1000;
+                                    timer_time.setText(df.format(timeLf));
+                                }else{
+                                    t.stop();
+                                    JOptionPane.showMessageDialog(game,
+                                            "Time has run out",
+                                            "Game Over",
+                                            JOptionPane.WARNING_MESSAGE);
+                                    sudoku.setEnabled(false);
+                                    check_button.setEnabled(false);
+                                    save_button.setEnabled(false);
                                 }
-                                if(difficulty_int == 1 || difficulty_int == 2){
-                                    sekundy = sekundy - 1;
-                                    if(sekundy < 1){
-                                        minuty = minuty - 1;
-                                        sekundy = sekundy + 59;
-                                    }
-                                }
-                                timer_time.setText(minuty + ":" + sekundy);
                             }
                         });
                         t.setRepeats(true);
@@ -195,7 +199,7 @@ public class Interface extends JFrame {
 //                            Tekst licznika
                         timer_text = new JLabel("Time: ");
                         timer_text.setFont(font2);
-                        timer_time = new JLabel(minuty + ":" + sekundy);
+                        timer_time= new JLabel(df.format(timeLf));
                         timer_time.setFont(font2);
 //                            Ustawienia okna
 
