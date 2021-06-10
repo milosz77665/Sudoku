@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -5,6 +6,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -24,7 +27,7 @@ public class Interface extends JFrame {
     JLabel timer_time;
     Font font = new Font("Arial", Font.BOLD, 30);
     Font font2 = new Font("Arial", Font.BOLD, 25);
-    JButton check_button;
+    JButton check_button, print_button;
 
     public void startScreen() {
         //Tworzenie okna programu
@@ -143,6 +146,11 @@ public class Interface extends JFrame {
                         check_button.setText("Solution");
                         check_button.addActionListener(this::Solve);
                         check_button.setActionCommand("answer");
+
+//                            Guzik do zapisywania screenshota
+                        print_button = new JButton();
+                        print_button.setText("Save as PNG");
+                        print_button.addActionListener(this::SaveAsPNG);
 //                            Ustawienia okna
 
                         game.setSize(470, 700);
@@ -152,6 +160,7 @@ public class Interface extends JFrame {
                         panel.add(timer_time);
                         panel.add(sudoku, BorderLayout.LINE_START);
                         panel.add(check_button, BorderLayout.AFTER_LINE_ENDS);
+                        panel.add(print_button, BorderLayout.AFTER_LINE_ENDS);
                         panel.add(label, BorderLayout.SOUTH);
                         game.add(panel);
 
@@ -221,6 +230,17 @@ public class Interface extends JFrame {
                                 DrawSudoku(list.get(1));
                                 sudoku.setEnabled(false);
                                 check_button.setEnabled(false);
+                            }
+                        }
+                    }
+
+                    public void SaveAsPNG(ActionEvent save_as_png) {
+                        String action = save_as_png.getActionCommand();
+                        if (action.equals("Save as PNG")) {
+                            try {
+                                getSaveSnapShot(panel, "sudoku.png");
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
                             }
                         }
                     }
@@ -301,6 +321,19 @@ public class Interface extends JFrame {
         timer_text.setFont(font2);
         timer_time = new JLabel(minuty + ":" + sekundy);
         timer_time.setFont(font2);
+    }
+
+    // Zapisywanie screenshota
+    public static BufferedImage getScreenShot(Component component) {
+
+        BufferedImage image = new BufferedImage(component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_RGB);
+        component.paint(image.getGraphics());
+        return image;
+    }
+
+    public static void getSaveSnapShot(Component component, String fileName) throws Exception {
+        BufferedImage img = getScreenShot(component);
+        ImageIO.write(img, "png", new File(fileName));
     }
 
 
