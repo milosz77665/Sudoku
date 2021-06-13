@@ -23,6 +23,8 @@ public class Interface extends JFrame {
     public ArrayList<int[][]> list;
     public JTable sudoku;
     int q = 0;
+    String nickname = "PRM2T";
+    int points;
     public ArrayList<Integer> full_cells = new ArrayList<>();
     public ArrayList<Integer> empty_cells = new ArrayList<>();
     JFrame game;
@@ -277,8 +279,15 @@ public class Interface extends JFrame {
                                         sudoku.setEnabled(false);
                                         check_button.setEnabled(false);
                                     }
-
-
+                                }
+                                if(count == 0 && difficulty_int != 0){
+                                    nickname = JOptionPane.showInputDialog(game, "What's your nickname?","PRM2T"); // Pytanie o  imię, które pojawi się na liście rekordów
+                                    if(difficulty_int == 1){
+                                        points = timeLf;
+                                    }
+                                    else if(difficulty_int == 2){
+                                        points = timeLf*5;
+                                    }
                                 }
                             } catch (NullPointerException npe) {
                                 JOptionPane.showMessageDialog(game,
