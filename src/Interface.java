@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 
 public class Interface extends JFrame {
@@ -18,7 +19,7 @@ public class Interface extends JFrame {
     public ArrayList<int[][]> list;
     public JTable sudoku;
     public ArrayList<String> records_data = new ArrayList<>();
-    public Map<Integer, ArrayList> records_dict = new HashMap<>();
+    public Map<Integer, List> records_dict = new HashMap<>();
     int q = 0;
     String nickname = "PRM2T";
     int points;
@@ -307,8 +308,8 @@ public class Interface extends JFrame {
                                         date = new Date();
                                     }
                                     try {
-                                        BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
-                                        record.write(nickname + " " + points + " " + formatter.format(date));
+                                        BufferedWriter record = new BufferedWriter(new FileWriter("records.txt",true));
+                                        record.write("\n"+nickname + ";" + points + ";" + formatter.format(date));
                                         record.close();
                                     } catch (IOException ioException) {
                                         ioException.printStackTrace();
@@ -442,16 +443,34 @@ public class Interface extends JFrame {
                 JFrame records_list = new JFrame("List of records");
                 File file = new File("records.txt");
                 try {
-                    BufferedReader br = new BufferedReader(new FileReader(file));
-                    String st;
-                    while ((st = br.readLine()) != null)
-                        System.out.println(st.split(";"));
-                } catch (Exception ex) {
+                    try {
+                        BufferedReader br = new BufferedReader(new FileReader(file));
+                        String st;
+                        while ((st = br.readLine()) != null) {
+//                            System.out.println(Arrays.toString(st.split(";")));
+                            List<String> recordsList = Arrays.asList(st.split(";"));
+                            Integer temp = Integer.valueOf(recordsList.get(1));
+//                        recordsList.remove(1);
+                            records_dict.put(temp, recordsList);
+                        }
+                    } catch (FileNotFoundException fnfe) {
+                        JOptionPane.showMessageDialog(records_list,
+                                fnfe.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (IOException ioe) {
+//                    System.out.println(ex.getMessage());
+//                }
                     JOptionPane.showMessageDialog(records_list,
-                            ex.getMessage(),
+                            ioe.getMessage(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
+//                List<Integer> employeeByKey = new ArrayList<>(records_dict.keySet());
+//                Collections.sort(employeeByKey);
+
 //                java.util.List<Integer> records_sorted = new ArrayList<Integer>(records_dict.values());
 //                Collections.sort(records_sorted);
                 JTable recordsTable = new JTable(6, 3);
@@ -464,7 +483,7 @@ public class Interface extends JFrame {
                 text_field.setHorizontalAlignment(JTextField.CENTER);
                 DefaultCellEditor customCellEditor = new DefaultCellEditor(text_field);
                 for (int i = 0; i < 3; i++) {
-                    recordsTable.getColumnModel().getColumn(i).setPreferredWidth(260);
+                    recordsTable.getColumnModel().getColumn(i).setPreferredWidth(350);
                     recordsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
                     recordsTable.getColumnModel().getColumn(i).setCellEditor(customCellEditor);
                 }
@@ -479,11 +498,20 @@ public class Interface extends JFrame {
                 recordsTable.getModel().setValueAt("Nick:", 0, 0);
                 recordsTable.getModel().setValueAt("Wynik:", 0, 1);
                 recordsTable.getModel().setValueAt("Data:", 0, 2);
+
+                SortedSet<Integer> keys = new TreeSet<>(records_dict.keySet()).descendingSet();
+                for (Integer key : keys) {
+                    int j = new ArrayList<>(keys).indexOf(key) + 1;
+                    for (int i = 0; i < 3; i++) {
+                        recordsTable.getModel().setValueAt(records_dict.get(key).get(i), j, i);
+
+                    }
+                }
                 JPanel panel_records = new JPanel();
                 panel_records.add(recordsTable);
                 records_list.add(panel_records);
                 records_list.setVisible(true);
-                records_list.setSize(800, 465);
+                records_list.setSize(1070, 465);
                 records_list.setLocationRelativeTo(null);
                 records_list.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
