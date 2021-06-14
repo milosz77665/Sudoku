@@ -6,10 +6,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -297,9 +294,23 @@ public class Interface extends JFrame {
                                     nickname = JOptionPane.showInputDialog(game, "What's your nickname?","PRM2T"); // Pytanie o  imię, które pojawi się na liście rekordów
                                     if(difficulty_int == 1){
                                         points = timeLf;
+                                        try {
+                                            BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
+                                            record.write(nickname+","+points);
+                                            record.close();
+                                        } catch (IOException ioException) {
+                                            ioException.printStackTrace();
+                                        }
                                     }
                                     else if(difficulty_int == 2){
                                         points = timeLf*5;
+                                        try {
+                                            BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
+                                            record.write(nickname+","+points);
+                                            record.close();
+                                        } catch (IOException ioException) {
+                                            ioException.printStackTrace();
+                                        }
                                     }
                                 }
                             } catch (NullPointerException npe) {
@@ -319,7 +330,6 @@ public class Interface extends JFrame {
                     }
 
                     public void SaveAsPNG(ActionEvent save_as_png) {
-                        t.stop();
                         String action = save_as_png.getActionCommand();
                         if (action.equals("Save as PNG")) {
                             try {
