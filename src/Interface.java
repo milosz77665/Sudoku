@@ -357,14 +357,13 @@ public class Interface extends JFrame {
 //                            }
 //                        list.add(save_matrix);
 //                    }
+                    JLabel saved_as = new JLabel();
 
-                    public void SaveGame(ActionEvent save_game) {
-                        String action = save_game.getActionCommand();
-                        if (action.equals("Save Game")) {
-                            t.stop();
-//                            Save();
+                    public void choosingSlot1(ActionEvent choosing_slot1) {
+                        String action = choosing_slot1.getActionCommand();
+                        if (action.equals("Slot 1")) {
                             try {
-                                File file = new File("sudoku.txt");
+                                File file = new File("sudoku1.txt");
                                 if (!file.exists()) {
                                     file.createNewFile();
                                 }
@@ -390,12 +389,147 @@ public class Interface extends JFrame {
                                 writer.close();
                                 fw.close();
 
+                                saved_as.setText("Saved as Slot 1");
+
+
 //                                writer.write(Arrays.deepToString(list.get(2)));
 
 //                                writer.close();
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
+                        }
+                    }
+
+                    public void choosingSlot2(ActionEvent choosing_slot2) {
+                        String action = choosing_slot2.getActionCommand();
+                        if (action.equals("Slot 2")) {
+                            try {
+                                File file = new File("sudoku2.txt");
+                                if (!file.exists()) {
+                                    file.createNewFile();
+                                }
+                                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                                BufferedWriter writer = new BufferedWriter(fw);
+                                for (int i = 0; i < sudoku.getRowCount(); i++) {
+                                    for (int j = 0; j < sudoku.getColumnCount(); j++) {
+                                        if (sudoku.getValueAt(i, j) == null || sudoku.getValueAt(i, j).toString().equals("")) {
+                                            save_matrix[i][j] = "0";
+//                                            writer.write("0");
+                                        } else {
+                                            save_matrix[i][j] = sudoku.getModel().getValueAt(i, j).toString();
+//                                            writer.write(sudoku.getModel().getValueAt(i, j).toString());
+                                        }
+                                    }
+
+                                }
+//                                writer.write("\n");
+                                writer.write(Arrays.deepToString(save_matrix));
+                                writer.write(Arrays.deepToString(list.get(0)));
+                                writer.write(Arrays.deepToString(list.get(1)));
+                                System.out.println(Arrays.deepToString(save_matrix));
+                                writer.close();
+                                fw.close();
+
+                                saved_as.setText("Saved as Slot 2");
+
+//                                writer.write(Arrays.deepToString(list.get(2)));
+
+//                                writer.close();
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        }
+                    }
+
+                    public void choosingSlot3(ActionEvent choosing_slot3) {
+                        String action = choosing_slot3.getActionCommand();
+                        if (action.equals("Slot 3")) {
+                            try {
+                                File file = new File("sudoku3.txt");
+                                if (!file.exists()) {
+                                    file.createNewFile();
+                                }
+                                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                                BufferedWriter writer = new BufferedWriter(fw);
+                                for (int i = 0; i < sudoku.getRowCount(); i++) {
+                                    for (int j = 0; j < sudoku.getColumnCount(); j++) {
+                                        if (sudoku.getValueAt(i, j) == null || sudoku.getValueAt(i, j).toString().equals("")) {
+                                            save_matrix[i][j] = "0";
+//                                            writer.write("0");
+                                        } else {
+                                            save_matrix[i][j] = sudoku.getModel().getValueAt(i, j).toString();
+//                                            writer.write(sudoku.getModel().getValueAt(i, j).toString());
+                                        }
+                                    }
+
+                                }
+//                                writer.write("\n");
+                                writer.write(Arrays.deepToString(save_matrix));
+                                writer.write(Arrays.deepToString(list.get(0)));
+                                writer.write(Arrays.deepToString(list.get(1)));
+                                System.out.println(Arrays.deepToString(save_matrix));
+                                writer.close();
+                                fw.close();
+
+                                saved_as.setText("Saved as Slot 3");
+
+//                                writer.write(Arrays.deepToString(list.get(2)));
+
+//                                writer.close();
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        }
+                    }
+
+                    public void choosingSlot4(ActionEvent choosing_slot4) {
+                        String action = choosing_slot4.getActionCommand();
+                        if (action.equals("Slot 4")) {
+                            try {
+                                File file = new File("sudoku4.txt");
+                                if (!file.exists()) {
+                                    file.createNewFile();
+                                }
+                                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                                BufferedWriter writer = new BufferedWriter(fw);
+                                for (int i = 0; i < sudoku.getRowCount(); i++) {
+                                    for (int j = 0; j < sudoku.getColumnCount(); j++) {
+                                        if (sudoku.getValueAt(i, j) == null || sudoku.getValueAt(i, j).toString().equals("")) {
+                                            save_matrix[i][j] = "0";
+//                                            writer.write("0");
+                                        } else {
+                                            save_matrix[i][j] = sudoku.getModel().getValueAt(i, j).toString();
+//                                            writer.write(sudoku.getModel().getValueAt(i, j).toString());
+                                        }
+                                    }
+
+                                }
+//                                writer.write("\n");
+                                writer.write(Arrays.deepToString(save_matrix));
+                                writer.write(Arrays.deepToString(list.get(0)));
+                                writer.write(Arrays.deepToString(list.get(1)));
+                                System.out.println(Arrays.deepToString(save_matrix));
+                                writer.close();
+                                fw.close();
+
+                                saved_as.setText("Saved as Slot 4");
+
+//                                writer.write(Arrays.deepToString(list.get(2)));
+
+//                                writer.close();
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        }
+                    }
+
+                    public void SaveGame(ActionEvent save_game) {
+                        String action = save_game.getActionCommand();
+                        if (action.equals("Save Game")) {
+                            t.stop();
+//                            Save();
+
 
                             JFrame save_screen = new JFrame("Choose slot");
                             save_screen.setSize(300, 500);
@@ -417,6 +551,15 @@ public class Interface extends JFrame {
                             JButton slot_4 = new JButton("Slot 4");
                             slot_4.setBounds(75, 350, 150, 50);
                             save_screen.add(slot_4);
+
+                            slot_1.addActionListener(this::choosingSlot1);
+                            slot_2.addActionListener(this::choosingSlot2);
+                            slot_3.addActionListener(this::choosingSlot3);
+                            slot_4.addActionListener(this::choosingSlot4);
+
+                            saved_as.setBounds(100, 410, 150, 50);
+                            saved_as.setText("");
+                            save_screen.add(saved_as);
 
                             save_screen.setLayout(null);
                             save_screen.setVisible(true);
