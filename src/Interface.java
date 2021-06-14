@@ -114,8 +114,7 @@ public class Interface extends JFrame {
                             CreateGameWindow();
                         } else if (choose_difficulty.getSelectedItem() == "Hard") {
                             difficulty_int = choose_difficulty.getSelectedIndex();
-                            timeLf = 10000;
-//                            timeLf=300000;
+                            timeLf=300000;
                             game = new JFrame("Sudoku - Hard");
                             CreateGameWindow();
                         }
@@ -496,8 +495,8 @@ public class Interface extends JFrame {
 //                    }
 //                }
                 recordsTable.getModel().setValueAt("Nick:", 0, 0);
-                recordsTable.getModel().setValueAt("Wynik:", 0, 1);
-                recordsTable.getModel().setValueAt("Data:", 0, 2);
+                recordsTable.getModel().setValueAt("Score:", 0, 1);
+                recordsTable.getModel().setValueAt("Date:", 0, 2);
 
                 SortedSet<Integer> keys = new TreeSet<>(records_dict.keySet()).descendingSet();
                 for (Integer key : keys) {
