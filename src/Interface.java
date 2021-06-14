@@ -361,6 +361,7 @@ public class Interface extends JFrame {
                     public void SaveGame(ActionEvent save_game) {
                         String action = save_game.getActionCommand();
                         if (action.equals("Save Game")) {
+                            t.stop();
 //                            Save();
                             try {
                                 File file = new File("sudoku.txt");
@@ -395,6 +396,38 @@ public class Interface extends JFrame {
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
+
+                            JFrame save_screen = new JFrame("Choose slot");
+                            save_screen.setSize(300, 500);
+                            save_screen.setLocationRelativeTo(null);
+                            save_screen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                            JButton slot_1 = new JButton("Slot 1");
+                            slot_1.setBounds(75, 50, 150, 50);
+                            save_screen.add(slot_1);
+
+                            JButton slot_2 = new JButton("Slot 2");
+                            slot_2.setBounds(75, 150, 150, 50);
+                            save_screen.add(slot_2);
+
+                            JButton slot_3 = new JButton("Slot 3");
+                            slot_3.setBounds(75, 250, 150, 50);
+                            save_screen.add(slot_3);
+
+                            JButton slot_4 = new JButton("Slot 4");
+                            slot_4.setBounds(75, 350, 150, 50);
+                            save_screen.add(slot_4);
+
+                            save_screen.setLayout(null);
+                            save_screen.setVisible(true);
+
+                            WindowListener saver_time_stopping = new WindowAdapter() {
+                                public void windowClosing(WindowEvent evt) {
+                                    t.start();
+                                }
+                            };
+                            save_screen.addWindowListener(saver_time_stopping);
+
                         }
                     }
 
