@@ -337,7 +337,7 @@ public class Interface extends JFrame {
                         String action = save_as_png.getActionCommand();
                         if (action.equals("Save as PNG")) {
                             try {
-                                getSaveSnapShot(panel, "sudoku.png");
+                                getSaveSnapShot(sudoku, "sudoku.png");
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
