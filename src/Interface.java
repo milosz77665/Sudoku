@@ -301,7 +301,7 @@ public class Interface extends JFrame {
                                         points = timeLf;
                                         try {
                                             BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
-                                            record.write(nickname+","+points);
+                                            record.write(nickname + "," + points);
                                             record.close();
                                         } catch (IOException ioException) {
                                             ioException.printStackTrace();
@@ -310,7 +310,7 @@ public class Interface extends JFrame {
                                         points = timeLf * 5;
                                         try {
                                             BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
-                                            record.write(nickname+","+points);
+                                            record.write(nickname + "," + points);
                                             record.close();
                                         } catch (IOException ioException) {
                                             ioException.printStackTrace();
