@@ -18,6 +18,8 @@ import java.util.Arrays;
 public class Interface extends JFrame {
     public String[] difficulty = {"Easy", "Normal", "Hard"};
     public Integer difficulty_int = 0; // 0 - easy, 1 - normal, 2 - hard
+    public String[] slots = {"Slot 1", "Slot 2", "Slot 3", "Slot 4"};
+    public Integer slots_int = 0; // 0 - easy, 1 - normal, 2 - hard
     public int minuty = 0;
     public int sekundy = 0;
     public ArrayList<int[][]> list;
@@ -107,14 +109,14 @@ public class Interface extends JFrame {
                             difficulty_int = 0;
                             timeLf=0;
                         } else if (choose_difficulty.getSelectedItem() == "Normal") {
+                            game = new JFrame("Sudoku - Normal");
                             difficulty_int = 1;
                             timeLf=600000;
-                            game = new JFrame("Sudoku - Normal");
                         } else {
+                            game = new JFrame("Sudoku - Hard");
                             difficulty_int = 2;
                             timeLf=10000;
 //                            timeLf=300000;
-                            game = new JFrame("Sudoku - Hard");
                         }
 //                            Generowanie Sudoku
                         generateSudoku();
@@ -310,7 +312,7 @@ public class Interface extends JFrame {
                         String action = save_as_png.getActionCommand();
                         if (action.equals("Save as PNG")) {
                             try {
-                                getSaveSnapShot(panel, "sudoku.png");
+                                getSaveSnapShot(sudoku, "sudoku.png");
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
@@ -320,6 +322,16 @@ public class Interface extends JFrame {
                     public void SaveGame(ActionEvent save_game) {
                         String action = save_game.getActionCommand();
                         if (action.equals("Save Game")) {
+
+                            JDialog slots_to_choose = new JDialog(game, "Choose slot");
+                            slots_to_choose.setSize(250, 250);
+                            slots_to_choose.setVisible(true);
+
+                            JComboBox choose_slot = new JComboBox(slots);
+                            choose_slot.setBounds(25, 25, 150, 50);
+                            choose_slot.setSelectedIndex(0);
+                            slots_to_choose.add(choose_slot);
+
                             Save();
                             try {
 
@@ -398,13 +410,18 @@ public class Interface extends JFrame {
         } else
             for (int r = 0; r < 9; r++) {
                 for (int c = 0; c < 9; c++) {
-                    if (sudoku.getValueAt(r, c) == null) {
+                    if (sudoku.getModel().getValueAt(r, c) == null) {
+                        System.out.println("xd");
                         save_matrix[r][c] = 0;
                     } else {
-                        save_matrix[r][c] = (int) sudoku.getValueAt(r, c);
+                        Integer x = Integer.parseInt(sudoku.getModel().getValueAt(r, c).toString());
+                        System.out.println(x);
+                        save_matrix[r][c] = Integer.parseInt(sudoku.getModel().getValueAt(r, c).toString());
                     }
                 }
             }
+        System.out.println("chuj");
+        System.out.println(Arrays.deepToString(save_matrix));
         list.add(save_matrix);
     }
 
