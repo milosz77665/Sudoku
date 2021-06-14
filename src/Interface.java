@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -11,8 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 
 public class Interface extends JFrame {
@@ -20,6 +20,7 @@ public class Interface extends JFrame {
     public Integer difficulty_int = 0; // 0 - easy, 1 - normal, 2 - hard
     public ArrayList<int[][]> list;
     public JTable sudoku;
+    public Map<String, Integer> records_dict = new HashMap<>();
     int q = 0;
     String nickname = "PRM2T";
     int points;
@@ -311,6 +312,7 @@ public class Interface extends JFrame {
                                         try {
                                             BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
                                             record.write(nickname+","+points);
+                                            records_dict.put(nickname, points);
                                             record.close();
                                         } catch (IOException ioException) {
                                             ioException.printStackTrace();
@@ -445,6 +447,8 @@ public class Interface extends JFrame {
                 records_list.setSize(600, 600);
                 records_list.setLocationRelativeTo(null);
                 records_list.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                java.util.List<Integer> records_sorted = new ArrayList<Integer>(records_dict.values());
+                Collections.sort(records_sorted);
 
                 records_list.setLayout(null);
                 records_list.setVisible(true);
