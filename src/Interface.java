@@ -224,9 +224,20 @@ public class Interface extends JFrame {
                         WindowListener listener = new WindowAdapter() {
                             public void windowClosing(WindowEvent evt) {
                                 t.stop();
+                                new_game.setEnabled(true);
+                                load_game.setEnabled(true);
                             }
                         };
                         game.addWindowListener(listener);
+
+                        WindowListener game_on = new WindowAdapter() {
+                            public void windowOpened(WindowEvent evt) {
+                                new_game.setEnabled(false);
+                                load_game.setEnabled(false);
+                            }
+                        };
+                        game.addWindowListener(game_on);
+
 //                          Listener tabeli
                         sudoku.getModel().addTableModelListener(new TableModelListener() {
                             public void tableChanged(TableModelEvent e) {
@@ -420,7 +431,6 @@ public class Interface extends JFrame {
                     }
                 }
             }
-        System.out.println("chuj");
         System.out.println(Arrays.deepToString(save_matrix));
         list.add(save_matrix);
     }
