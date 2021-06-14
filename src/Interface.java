@@ -6,7 +6,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,10 +18,6 @@ import java.util.Arrays;
 public class Interface extends JFrame {
     public String[] difficulty = {"Easy", "Normal", "Hard"};
     public Integer difficulty_int = 0; // 0 - easy, 1 - normal, 2 - hard
-    public String[] slots = {"Slot 1", "Slot 2", "Slot 3", "Slot 4"};
-    public Integer slots_int = 0; // 0 - easy, 1 - normal, 2 - hard
-    public int minuty = 0;
-    public int sekundy = 0;
     public ArrayList<int[][]> list;
     public JTable sudoku;
     int q = 0;
@@ -27,7 +26,7 @@ public class Interface extends JFrame {
     public ArrayList<Integer> full_cells = new ArrayList<>();
     public ArrayList<Integer> empty_cells = new ArrayList<>();
     JFrame game;
-    int[][] save_matrix = new int[9][9];
+    String[][] save_matrix = new String[9][9];
     JPanel panel;
     JLabel label;
     JLabel timer_text;
@@ -38,6 +37,7 @@ public class Interface extends JFrame {
     JButton check_button, print_button, save_button;
     SimpleDateFormat df = new SimpleDateFormat("mm:ss");
     int timeLf = 0;
+
     public void startScreen() {
         //Tworzenie okna programu
         JFrame start_screen = new JFrame("Sudoku");
@@ -97,25 +97,31 @@ public class Interface extends JFrame {
                 ok.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        difficulty_int = choose_difficulty.getSelectedIndex();
                         set_difficulty.dispose();
 
 //                            Ustawienie nagłówka
                         if (choose_difficulty.getSelectedItem() == "Easy") {
+                            difficulty_int = choose_difficulty.getSelectedIndex();
                             game = new JFrame("Sudoku - Easy");
-                            difficulty_int = 0;
-                            timeLf=0;
+                            timeLf = 0;
+                            CreateGameWindow();
                         } else if (choose_difficulty.getSelectedItem() == "Normal") {
+                            difficulty_int = choose_difficulty.getSelectedIndex();
+                            timeLf = 600000;
                             game = new JFrame("Sudoku - Normal");
-                            difficulty_int = 1;
-                            timeLf=600000;
-                        } else {
-                            game = new JFrame("Sudoku - Hard");
-                            difficulty_int = 2;
-                            timeLf=10000;
+                            CreateGameWindow();
+                        } else if (choose_difficulty.getSelectedItem() == "Hard") {
+                            difficulty_int = choose_difficulty.getSelectedIndex();
+                            timeLf = 10000;
 //                            timeLf=300000;
+                            game = new JFrame("Sudoku - Hard");
+                            CreateGameWindow();
                         }
-//                            Generowanie Sudoku
+
+                    }
+
+                    public void CreateGameWindow() {
+                        //                            Generowanie Sudoku
                         generateSudoku();
 //                            Blokowanie uzupełnionych pól
                         MakeNonEditable();
@@ -135,15 +141,15 @@ public class Interface extends JFrame {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 if (difficulty_int == 0) {
-                                    timeLf=timeLf+1000;
+                                    timeLf = timeLf + 1000;
                                     timer_time.setText(df.format(timeLf));
-                                }else if(difficulty_int == 1 && timeLf>0){
-                                    timeLf=timeLf-1000;
+                                } else if (difficulty_int == 1 && timeLf > 0) {
+                                    timeLf = timeLf - 1000;
                                     timer_time.setText(df.format(timeLf));
-                                }else if (difficulty_int == 2&& timeLf>0){
-                                    timeLf=timeLf-1000;
+                                } else if (difficulty_int == 2 && timeLf > 0) {
+                                    timeLf = timeLf - 1000;
                                     timer_time.setText(df.format(timeLf));
-                                }else{
+                                } else {
                                     t.stop();
                                     JOptionPane.showMessageDialog(game,
                                             "Time has run out",
@@ -200,7 +206,7 @@ public class Interface extends JFrame {
 //                            Tekst licznika
                         timer_text = new JLabel("Time: ");
                         timer_text.setFont(font2);
-                        timer_time= new JLabel(df.format(timeLf));
+                        timer_time = new JLabel(df.format(timeLf));
                         timer_time.setFont(font2);
 //                            Ustawienia okna
 
@@ -221,25 +227,12 @@ public class Interface extends JFrame {
                         WindowListener listener = new WindowAdapter() {
                             public void windowClosing(WindowEvent evt) {
                                 t.stop();
-                                new_game.setEnabled(true);
-                                load_game.setEnabled(true);
                             }
                         };
                         game.addWindowListener(listener);
-
-                        WindowListener game_on = new WindowAdapter() {
-                            public void windowOpened(WindowEvent evt) {
-                                new_game.setEnabled(false);
-                                load_game.setEnabled(false);
-                            }
-                        };
-                        game.addWindowListener(game_on);
-
 //                          Listener tabeli
                         sudoku.getModel().addTableModelListener(new TableModelListener() {
                             public void tableChanged(TableModelEvent e) {
-
-
                                 try {
                                     String value_in_cell = (String) sudoku.getValueAt(e.getLastRow(), e.getColumn());
                                     if (value_in_cell.equals("")) {
@@ -290,27 +283,12 @@ public class Interface extends JFrame {
                                         check_button.setEnabled(false);
                                     }
                                 }
-                                if(count == 0 && difficulty_int != 0){
-                                    nickname = JOptionPane.showInputDialog(game, "What's your nickname?","PRM2T"); // Pytanie o  imię, które pojawi się na liście rekordów
-                                    if(difficulty_int == 1){
+                                if (count == 0 && difficulty_int != 0) {
+                                    nickname = JOptionPane.showInputDialog(game, "What's your nickname?", "PRM2T"); // Pytanie o  imię, które pojawi się na liście rekordów
+                                    if (difficulty_int == 1) {
                                         points = timeLf;
-                                        try {
-                                            BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
-                                            record.write(nickname+","+points);
-                                            record.close();
-                                        } catch (IOException ioException) {
-                                            ioException.printStackTrace();
-                                        }
-                                    }
-                                    else if(difficulty_int == 2){
-                                        points = timeLf*5;
-                                        try {
-                                            BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
-                                            record.write(nickname+","+points);
-                                            record.close();
-                                        } catch (IOException ioException) {
-                                            ioException.printStackTrace();
-                                        }
+                                    } else if (difficulty_int == 2) {
+                                        points = timeLf * 5;
                                     }
                                 }
                             } catch (NullPointerException npe) {
@@ -330,38 +308,67 @@ public class Interface extends JFrame {
                     }
 
                     public void SaveAsPNG(ActionEvent save_as_png) {
+                        t.stop();
                         String action = save_as_png.getActionCommand();
                         if (action.equals("Save as PNG")) {
                             try {
-                                getSaveSnapShot(sudoku, "sudoku.png");
+                                getSaveSnapShot(panel, "sudoku.png");
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
                         }
                     }
+                    // cos tam do zapisu macierzy w liscie
+//                    public void Save() {
+//                        if (list.size() == 3) {
+//                            list.remove(2);
+//                        } else
+//                            for (int r = 0; r < 9; r++) {
+//                                for (int c = 0; c < 9; c++) {
+//                                    if (sudoku.getValueAt(r, c) == null) {
+//                                        save_matrix[r][c] = 0;
+//                                    } else {
+//                                        save_matrix[r][c] = Integer.parseInt(sudoku.getModel().getValueAt(r, c).toString());
+//                                    }
+//                                }
+//                            }
+//                        list.add(save_matrix);
+//                    }
 
                     public void SaveGame(ActionEvent save_game) {
                         String action = save_game.getActionCommand();
                         if (action.equals("Save Game")) {
-
-                            JDialog slots_to_choose = new JDialog(game, "Choose slot");
-                            slots_to_choose.setSize(250, 250);
-                            slots_to_choose.setVisible(true);
-
-                            JComboBox choose_slot = new JComboBox(slots);
-                            choose_slot.setBounds(25, 25, 150, 50);
-                            choose_slot.setSelectedIndex(0);
-                            slots_to_choose.add(choose_slot);
-
-                            Save();
+//                            Save();
                             try {
+                                File file = new File("sudoku.txt");
+                                if (!file.exists()) {
+                                    file.createNewFile();
+                                }
+                                FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                                BufferedWriter writer = new BufferedWriter(fw);
+                                for (int i = 0; i < sudoku.getRowCount(); i++) {
+                                    for (int j = 0; j < sudoku.getColumnCount(); j++) {
+                                        if (sudoku.getValueAt(i, j) == null || sudoku.getValueAt(i, j).toString().equals("")) {
+                                            save_matrix[i][j] = "0";
+//                                            writer.write("0");
+                                        } else {
+                                            save_matrix[i][j] = sudoku.getModel().getValueAt(i, j).toString();
+//                                            writer.write(sudoku.getModel().getValueAt(i, j).toString());
+                                        }
+                                    }
 
-                                BufferedWriter writer = new BufferedWriter(new FileWriter("sudoku.txt"));
+                                }
+//                                writer.write("\n");
+                                writer.write(Arrays.deepToString(save_matrix));
                                 writer.write(Arrays.deepToString(list.get(0)));
                                 writer.write(Arrays.deepToString(list.get(1)));
-                                writer.write(Arrays.deepToString(list.get(2)));
-
+                                System.out.println(Arrays.deepToString(save_matrix));
                                 writer.close();
+                                fw.close();
+
+//                                writer.write(Arrays.deepToString(list.get(2)));
+
+//                                writer.close();
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
@@ -424,26 +431,6 @@ public class Interface extends JFrame {
 
     }
 
-    // cos tam do zapisu macierzy w liscie
-    public void Save() {
-        if (list.size() == 3) {
-            list.remove(2);
-        } else
-            for (int r = 0; r < 9; r++) {
-                for (int c = 0; c < 9; c++) {
-                    if (sudoku.getModel().getValueAt(r, c) == null) {
-                        System.out.println("xd");
-                        save_matrix[r][c] = 0;
-                    } else {
-                        Integer x = Integer.parseInt(sudoku.getModel().getValueAt(r, c).toString());
-                        System.out.println(x);
-                        save_matrix[r][c] = Integer.parseInt(sudoku.getModel().getValueAt(r, c).toString());
-                    }
-                }
-            }
-        System.out.println(Arrays.deepToString(save_matrix));
-        list.add(save_matrix);
-    }
 
     // Zapisywanie screenshota
     public static BufferedImage getScreenShot(Component component) {
