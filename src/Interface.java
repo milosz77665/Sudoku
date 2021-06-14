@@ -7,10 +7,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -20,13 +17,16 @@ public class Interface extends JFrame {
     public Integer difficulty_int = 0; // 0 - easy, 1 - normal, 2 - hard
     public ArrayList<int[][]> list;
     public JTable sudoku;
-    public Map<String, Integer> records_dict = new HashMap<>();
+    public ArrayList<String> records_data = new ArrayList<>();
+    public Map<Integer, ArrayList> records_dict = new HashMap<>();
     int q = 0;
     String nickname = "PRM2T";
     int points;
     public ArrayList<Integer> full_cells = new ArrayList<>();
     public ArrayList<Integer> empty_cells = new ArrayList<>();
     JFrame game;
+    Date date;
+    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     String[][] save_matrix = new String[9][9];
     JPanel panel;
     JLabel label;
@@ -296,27 +296,22 @@ public class Interface extends JFrame {
                                         check_button.setEnabled(false);
                                     }
                                 }
+
                                 if (count == 0 && difficulty_int != 0) {
                                     nickname = JOptionPane.showInputDialog(game, "What's your nickname?", "PRM2T"); // Pytanie o  imię, które pojawi się na liście rekordów
                                     if (difficulty_int == 1) {
                                         points = timeLf;
-                                        try {
-                                            BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
-                                            record.write(nickname+","+points);
-                                            record.close();
-                                        } catch (IOException ioException) {
-                                            ioException.printStackTrace();
-                                        }
+                                        date = new Date();
                                     } else if (difficulty_int == 2) {
                                         points = timeLf * 5;
-                                        try {
-                                            BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
-                                            record.write(nickname+","+points);
-                                            records_dict.put(nickname, points);
-                                            record.close();
-                                        } catch (IOException ioException) {
-                                            ioException.printStackTrace();
-                                        }
+                                        date = new Date();
+                                    }
+                                    try {
+                                        BufferedWriter record = new BufferedWriter(new FileWriter("records.txt"));
+                                        record.write(nickname + " " + points + " " + formatter.format(date));
+                                        record.close();
+                                    } catch (IOException ioException) {
+                                        ioException.printStackTrace();
                                     }
                                 }
                             } catch (NullPointerException npe) {
@@ -326,6 +321,7 @@ public class Interface extends JFrame {
                                         JOptionPane.ERROR_MESSAGE);
 
                             }
+
                             if (count > 0) {
                                 t.stop();
                                 DrawSudoku(list.get(1));
@@ -444,13 +440,54 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame records_list = new JFrame("List of records");
-                records_list.setSize(600, 600);
+                File file = new File("records.txt");
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    String st;
+                    while ((st = br.readLine()) != null)
+                        System.out.println(st.split(";"));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(records_list,
+                            ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+//                java.util.List<Integer> records_sorted = new ArrayList<Integer>(records_dict.values());
+//                Collections.sort(records_sorted);
+                JTable recordsTable = new JTable(6, 3);
+                recordsTable.setEnabled(false);
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+                recordsTable.setFont(font);
+                JTextField text_field = new JTextField();
+                text_field.setFont(font);
+                text_field.setHorizontalAlignment(JTextField.CENTER);
+                DefaultCellEditor customCellEditor = new DefaultCellEditor(text_field);
+                for (int i = 0; i < 3; i++) {
+                    recordsTable.getColumnModel().getColumn(i).setPreferredWidth(260);
+                    recordsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                    recordsTable.getColumnModel().getColumn(i).setCellEditor(customCellEditor);
+                }
+                recordsTable.setRowHeight(70);
+                recordsTable.setCellSelectionEnabled(false);
+//                System.out.println(records_sorted);
+//                for (int i = 1; i < 6; i++) {
+//                    for (int j = 0; j < 3; j++) {
+//                        recordsTable.getModel().setValueAt(records_sorted.get(), i, j);
+//                    }
+//                }
+                recordsTable.getModel().setValueAt("Nick:", 0, 0);
+                recordsTable.getModel().setValueAt("Wynik:", 0, 1);
+                recordsTable.getModel().setValueAt("Data:", 0, 2);
+                JPanel panel_records = new JPanel();
+                panel_records.add(recordsTable);
+                records_list.add(panel_records);
+                records_list.setVisible(true);
+                records_list.setSize(800, 465);
                 records_list.setLocationRelativeTo(null);
                 records_list.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                java.util.List<Integer> records_sorted = new ArrayList<Integer>(records_dict.values());
-                Collections.sort(records_sorted);
 
-                records_list.setLayout(null);
+
                 records_list.setVisible(true);
             }
         });
