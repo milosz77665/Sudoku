@@ -632,14 +632,23 @@ public class Interface extends JFrame {
                 JButton slot_2 = new JButton("Slot 2");
                 slot_2.setBounds(75, 150, 150, 50);
                 load_screen.add(slot_2);
+                slot_2.setText("Slot2");
+                slot_2.addActionListener(this::Slot2);
+                slot_2.setActionCommand("slot2");
 
                 JButton slot_3 = new JButton("Slot 3");
                 slot_3.setBounds(75, 250, 150, 50);
                 load_screen.add(slot_3);
+                slot_3.setText("Slot3");
+                slot_3.addActionListener(this::Slot3);
+                slot_3.setActionCommand("slot3");
 
                 JButton slot_4 = new JButton("Slot 4");
                 slot_4.setBounds(75, 350, 150, 50);
                 load_screen.add(slot_4);
+                slot_4.setText("Slot4");
+                slot_4.addActionListener(this::Slot4);
+                slot_4.setActionCommand("slot4");
 
                 load_screen.setLayout(null);
                 load_screen.setVisible(true);
@@ -676,6 +685,103 @@ public class Interface extends JFrame {
                         }
                     }
                 }
+
+            private void Slot2(ActionEvent actionEvent) {
+                String action = actionEvent.getActionCommand();
+                if (action.equals("slot2")) {
+                    File file = new File("sudoku2.txt");
+                    try {
+                        try {
+                            BufferedReader br = new BufferedReader(new FileReader(file));
+                            String st;
+                            while ((st = br.readLine()) != null) {
+                                System.out.println(Arrays.toString(st.split(";")));
+                                List<String> loadList = Arrays.asList(st.split(";"));
+//                            Integer temp = Integer.valueOf(loadList.get(1));
+//                        recordsList.remove(1);
+//                            records_dict.put(temp, loadList);
+                            }
+                        } catch (FileNotFoundException fnfe) {
+                            JOptionPane.showMessageDialog(load_screen,
+                                    fnfe.getMessage(),
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (IOException ioe) {
+//                    System.out.println(ex.getMessage());
+//                }
+                        JOptionPane.showMessageDialog(load_screen,
+                                ioe.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+
+            private void Slot3(ActionEvent actionEvent) {
+                String action = actionEvent.getActionCommand();
+                if (action.equals("slot3")) {
+                    File file = new File("sudoku3.txt");
+                    try {
+                        try {
+                            BufferedReader br = new BufferedReader(new FileReader(file));
+                            String st;
+                            while ((st = br.readLine()) != null) {
+                                System.out.println(Arrays.toString(st.split(";")));
+                                List<String> loadList = Arrays.asList(st.split(";"));
+//                            Integer temp = Integer.valueOf(loadList.get(1));
+//                        recordsList.remove(1);
+//                            records_dict.put(temp, loadList);
+                            }
+                        } catch (FileNotFoundException fnfe) {
+                            JOptionPane.showMessageDialog(load_screen,
+                                    fnfe.getMessage(),
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (IOException ioe) {
+//                    System.out.println(ex.getMessage());
+//                }
+                        JOptionPane.showMessageDialog(load_screen,
+                                ioe.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+
+            private void Slot4(ActionEvent actionEvent) {
+                String action = actionEvent.getActionCommand();
+                if (action.equals("slot4")) {
+                    File file = new File("sudoku4.txt");
+                    try {
+                        try {
+                            BufferedReader br = new BufferedReader(new FileReader(file));
+                            String st;
+                            while ((st = br.readLine()) != null) {
+                                System.out.println(Arrays.toString(st.split(";")));
+                                List<String> loadList = Arrays.asList(st.split(";"));
+//                            Integer temp = Integer.valueOf(loadList.get(1));
+//                        recordsList.remove(1);
+//                            records_dict.put(temp, loadList);
+                            }
+                        } catch (FileNotFoundException fnfe) {
+                            JOptionPane.showMessageDialog(load_screen,
+                                    fnfe.getMessage(),
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (IOException ioe) {
+//                    System.out.println(ex.getMessage());
+//                }
+                        JOptionPane.showMessageDialog(load_screen,
+                                ioe.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+
 
 
         });
