@@ -34,6 +34,7 @@ public class Interface extends JFrame {
     JLabel timer_text;
     JLabel timer_time;
     Timer t;
+    JFrame load_screen;
     Font font = new Font("Arial", Font.BOLD, 30);
     Font font2 = new Font("Arial", Font.BOLD, 25);
     JButton check_button, print_button, save_button;
@@ -613,7 +614,7 @@ public class Interface extends JFrame {
         load_game.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame load_screen = new JFrame("Choose save file");
+                load_screen = new JFrame("Choose save file");
                 load_screen.setSize(300, 500);
                 load_screen.setLocationRelativeTo(null);
                 load_screen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -621,34 +622,10 @@ public class Interface extends JFrame {
                 JButton slot_1 = new JButton("Slot 1");
                 slot_1.setBounds(75, 50, 150, 50);
                 load_screen.add(slot_1);
+                slot_1.setText("slot1");
+                slot_1.addActionListener(this::Slot1);
 
-//                File file = new File("sudoku1.txt");
-//                try {
-//                    try {
-//                        BufferedReader br = new BufferedReader(new FileReader(file));
-//                        String st;
-//                        while ((st = br.readLine()) != null) {
-////                            System.out.println(Arrays.toString(st.split(";")));
-//                            List<String> recordsList = Arrays.asList(st.split(";"));
-//                            Integer temp = Integer.valueOf(recordsList.get(1));
-////                        recordsList.remove(1);
-//                            records_dict.put(temp, recordsList);
-//                        }
-//                    } catch (FileNotFoundException fnfe) {
-//                        JOptionPane.showMessageDialog(load_screen,
-//                                fnfe.getMessage(),
-//                                "Error",
-//                                JOptionPane.ERROR_MESSAGE);
-//                    }
-//                } catch (IOException ioe) {
-////                    System.out.println(ex.getMessage());
-////                }
-//                    JOptionPane.showMessageDialog(load_screen,
-//                            ioe.getMessage(),
-//                            "Error",
-//                            JOptionPane.ERROR_MESSAGE);
-//                }
-//
+
 
 
                 JButton slot_2 = new JButton("Slot 2");
@@ -666,7 +643,43 @@ public class Interface extends JFrame {
                 load_screen.setLayout(null);
                 load_screen.setVisible(true);
             }
+
+            private void Slot1(ActionEvent actionEvent) {
+                    String action = actionEvent.getActionCommand();
+                    if (action.equals("Save Game")) {
+                        File file = new File("sudoku1.txt");
+                        try {
+                            try {
+                                BufferedReader br = new BufferedReader(new FileReader(file));
+                                String st;
+                                while ((st = br.readLine()) != null) {
+                                    System.out.println(Arrays.toString(st.split(";")));
+                                    List<String> loadList = Arrays.asList(st.split(";"));
+//                            Integer temp = Integer.valueOf(loadList.get(1));
+//                        recordsList.remove(1);
+//                            records_dict.put(temp, loadList);
+                                }
+                            } catch (FileNotFoundException fnfe) {
+                                JOptionPane.showMessageDialog(load_screen,
+                                        fnfe.getMessage(),
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (IOException ioe) {
+//                    System.out.println(ex.getMessage());
+//                }
+                            JOptionPane.showMessageDialog(load_screen,
+                                    ioe.getMessage(),
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+
+
         });
+
+
 
         //Records - tablica rekoródw
         records.addActionListener(new ActionListener() {
@@ -770,7 +783,6 @@ public class Interface extends JFrame {
         BufferedImage img = getScreenShot(component);
         ImageIO.write(img, "png", new File(fileName));
     }
-
 
     public void DrawSudoku(int[][] matrix) {
         JFrame solution = new JFrame();
