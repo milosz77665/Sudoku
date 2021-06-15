@@ -362,6 +362,9 @@ public class Interface extends JFrame {
                     public void choosingSlot1(ActionEvent choosing_slot1) {
                         String action = choosing_slot1.getActionCommand();
                         if (action.equals("Slot 1")) {
+//                            game.dispose();
+//                            new_game.setEnabled(true);
+//                            load_game.setEnabled(true);
                             try {
                                 File file = new File("sudoku1.txt");
                                 if (!file.exists()) {
@@ -383,8 +386,12 @@ public class Interface extends JFrame {
                                 }
 //                                writer.write("\n");
                                 writer.write(Arrays.deepToString(save_matrix));
+                                writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(0)));
+                                writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(1)));
+                                writer.write(";");
+                                writer.write(String.valueOf(choose_difficulty.getSelectedIndex()));
                                 System.out.println(Arrays.deepToString(save_matrix));
                                 writer.close();
                                 fw.close();
@@ -404,6 +411,9 @@ public class Interface extends JFrame {
                     public void choosingSlot2(ActionEvent choosing_slot2) {
                         String action = choosing_slot2.getActionCommand();
                         if (action.equals("Slot 2")) {
+//                            game.dispose();
+//                            new_game.setEnabled(true);
+//                            load_game.setEnabled(true);
                             try {
                                 File file = new File("sudoku2.txt");
                                 if (!file.exists()) {
@@ -425,8 +435,12 @@ public class Interface extends JFrame {
                                 }
 //                                writer.write("\n");
                                 writer.write(Arrays.deepToString(save_matrix));
+                                writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(0)));
+                                writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(1)));
+                                writer.write(";");
+                                writer.write(String.valueOf(choose_difficulty.getSelectedIndex()));
                                 System.out.println(Arrays.deepToString(save_matrix));
                                 writer.close();
                                 fw.close();
@@ -445,6 +459,9 @@ public class Interface extends JFrame {
                     public void choosingSlot3(ActionEvent choosing_slot3) {
                         String action = choosing_slot3.getActionCommand();
                         if (action.equals("Slot 3")) {
+//                            game.dispose();
+//                            new_game.setEnabled(true);
+//                            load_game.setEnabled(true);
                             try {
                                 File file = new File("sudoku3.txt");
                                 if (!file.exists()) {
@@ -466,8 +483,12 @@ public class Interface extends JFrame {
                                 }
 //                                writer.write("\n");
                                 writer.write(Arrays.deepToString(save_matrix));
+                                writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(0)));
+                                writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(1)));
+                                writer.write(";");
+                                writer.write(String.valueOf(choose_difficulty.getSelectedIndex()));
                                 System.out.println(Arrays.deepToString(save_matrix));
                                 writer.close();
                                 fw.close();
@@ -486,6 +507,9 @@ public class Interface extends JFrame {
                     public void choosingSlot4(ActionEvent choosing_slot4) {
                         String action = choosing_slot4.getActionCommand();
                         if (action.equals("Slot 4")) {
+//                            game.dispose();
+//                            new_game.setEnabled(true);
+//                            load_game.setEnabled(true);
                             try {
                                 File file = new File("sudoku4.txt");
                                 if (!file.exists()) {
@@ -507,8 +531,12 @@ public class Interface extends JFrame {
                                 }
 //                                writer.write("\n");
                                 writer.write(Arrays.deepToString(save_matrix));
+                                writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(0)));
+                                writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(1)));
+                                writer.write(";");
+                                writer.write(String.valueOf(choose_difficulty.getSelectedIndex()));
                                 System.out.println(Arrays.deepToString(save_matrix));
                                 writer.close();
                                 fw.close();
@@ -593,6 +621,35 @@ public class Interface extends JFrame {
                 JButton slot_1 = new JButton("Slot 1");
                 slot_1.setBounds(75, 50, 150, 50);
                 load_screen.add(slot_1);
+
+//                File file = new File("sudoku1.txt");
+//                try {
+//                    try {
+//                        BufferedReader br = new BufferedReader(new FileReader(file));
+//                        String st;
+//                        while ((st = br.readLine()) != null) {
+////                            System.out.println(Arrays.toString(st.split(";")));
+//                            List<String> recordsList = Arrays.asList(st.split(";"));
+//                            Integer temp = Integer.valueOf(recordsList.get(1));
+////                        recordsList.remove(1);
+//                            records_dict.put(temp, recordsList);
+//                        }
+//                    } catch (FileNotFoundException fnfe) {
+//                        JOptionPane.showMessageDialog(load_screen,
+//                                fnfe.getMessage(),
+//                                "Error",
+//                                JOptionPane.ERROR_MESSAGE);
+//                    }
+//                } catch (IOException ioe) {
+////                    System.out.println(ex.getMessage());
+////                }
+//                    JOptionPane.showMessageDialog(load_screen,
+//                            ioe.getMessage(),
+//                            "Error",
+//                            JOptionPane.ERROR_MESSAGE);
+//                }
+//
+
 
                 JButton slot_2 = new JButton("Slot 2");
                 slot_2.setBounds(75, 150, 150, 50);
