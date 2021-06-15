@@ -622,8 +622,9 @@ public class Interface extends JFrame {
                 JButton slot_1 = new JButton("Slot 1");
                 slot_1.setBounds(75, 50, 150, 50);
                 load_screen.add(slot_1);
-                slot_1.setText("slot1");
+                slot_1.setText("Slot1");
                 slot_1.addActionListener(this::Slot1);
+                slot_1.setActionCommand("slot1");
 
 
 
@@ -646,7 +647,7 @@ public class Interface extends JFrame {
 
             private void Slot1(ActionEvent actionEvent) {
                     String action = actionEvent.getActionCommand();
-                    if (action.equals("Save Game")) {
+                    if (action.equals("slot1")) {
                         File file = new File("sudoku1.txt");
                         try {
                             try {
