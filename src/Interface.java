@@ -665,10 +665,25 @@ public class Interface extends JFrame {
                                 while ((st = br.readLine()) != null) {
                                     System.out.println(Arrays.toString(st.split(";")));
                                     List<String> loadList = Arrays.asList(st.split(";"));
-//                            Integer temp = Integer.valueOf(loadList.get(1));
-//                        recordsList.remove(1);
-//                            records_dict.put(temp, loadList);
+//                                    List<String> loadList_temp = new ArrayList<>();
+                                    String temp;
+                                    temp=loadList.get(0).replace("[","");
+                                    temp=temp.replace(",","");
+                                    temp=temp.replace("]","");
+                                    temp=temp.replace(" ","");
+//                                    game = new JFrame("Sudoku - Easy");
+//                                    timeLf = 0;
+//                                    CreateGameWindow();
+//                                    for (int i = 0; i < 9; i++) {
+//                                        for (int j = 0; j < 9; j++) {
+//                                        System.out.print("\t" + sudoku[i][j]);
+//                                        if (sudok[i][j] != 0) {
+//                                            table.getModel().setValueAt(matrix[i][j], i, j);
+                                    System.out.println(temp);
+
+//                                    list.get(0)=loadList.get(0) costam
                                 }
+//
                             } catch (FileNotFoundException fnfe) {
                                 JOptionPane.showMessageDialog(load_screen,
                                         fnfe.getMessage(),
