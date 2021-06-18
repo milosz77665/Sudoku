@@ -712,9 +712,16 @@ public class Interface extends JFrame {
                             while ((st = br.readLine()) != null) {
                                 System.out.println(Arrays.toString(st.split(";")));
                                 List<String> loadList = Arrays.asList(st.split(";"));
+//                                    List<String> loadList_temp = new ArrayList<>();
+                                String temp;
+                                temp=loadList.get(0).replace("[","");
+                                temp=temp.replace(",","");
+                                temp=temp.replace("]","");
+                                temp=temp.replace(" ","");
 //                            Integer temp = Integer.valueOf(loadList.get(1));
 //                        recordsList.remove(1);
 //                            records_dict.put(temp, loadList);
+                                System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
                             JOptionPane.showMessageDialog(load_screen,
@@ -744,9 +751,16 @@ public class Interface extends JFrame {
                             while ((st = br.readLine()) != null) {
                                 System.out.println(Arrays.toString(st.split(";")));
                                 List<String> loadList = Arrays.asList(st.split(";"));
+//                                    List<String> loadList_temp = new ArrayList<>();
+                                String temp;
+                                temp=loadList.get(0).replace("[","");
+                                temp=temp.replace(",","");
+                                temp=temp.replace("]","");
+                                temp=temp.replace(" ","");
 //                            Integer temp = Integer.valueOf(loadList.get(1));
 //                        recordsList.remove(1);
 //                            records_dict.put(temp, loadList);
+                                System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
                             JOptionPane.showMessageDialog(load_screen,
@@ -776,9 +790,16 @@ public class Interface extends JFrame {
                             while ((st = br.readLine()) != null) {
                                 System.out.println(Arrays.toString(st.split(";")));
                                 List<String> loadList = Arrays.asList(st.split(";"));
+//                                    List<String> loadList_temp = new ArrayList<>();
+                                String temp;
+                                temp=loadList.get(0).replace("[","");
+                                temp=temp.replace(",","");
+                                temp=temp.replace("]","");
+                                temp=temp.replace(" ","");
 //                            Integer temp = Integer.valueOf(loadList.get(1));
 //                        recordsList.remove(1);
 //                            records_dict.put(temp, loadList);
+                                System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
                             JOptionPane.showMessageDialog(load_screen,
