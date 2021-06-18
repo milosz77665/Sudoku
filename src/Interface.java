@@ -252,18 +252,9 @@ public class Interface extends JFrame {
                                     if (value_in_cell.equals("")) {
                                         // dzięki temu nie wyrzuca błędu przy usuwaniu nieprawiłowej wartości
                                     } else if (Integer.parseInt(value_in_cell) > 9 || Integer.parseInt(value_in_cell) < 1) {
-//                                        JOptionPane.showMessageDialog(game,
-//                                                "Wpisuj wartości tylko z zakresu [1, 9]",
-//                                                "Error",
-//                                                JOptionPane.ERROR_MESSAGE);
                                         sudoku.setValueAt("", e.getLastRow(), e.getColumn());
                                     }
                                 } catch (NumberFormatException err) {
-//                                    JOptionPane.showMessageDialog(game,
-//                                            "Wpisuj tylko liczby całkowite",
-//                                            "Error",
-//                                            JOptionPane.ERROR_MESSAGE);
-//                                    System.out.println(err);
                                     sudoku.setValueAt("", e.getLastRow(), e.getColumn());
                                 }
                             }
@@ -273,7 +264,6 @@ public class Interface extends JFrame {
                     public void Solve(ActionEvent solve) {
                         String action = solve.getActionCommand();
                         if (action.equals("answer")) {
-//                            sudoku.isCellEditable(9,9);
                             int count = 0;
                             try {
 
@@ -342,30 +332,11 @@ public class Interface extends JFrame {
                             }
                         }
                     }
-                    // cos tam do zapisu macierzy w liscie
-//                    public void Save() {
-//                        if (list.size() == 3) {
-//                            list.remove(2);
-//                        } else
-//                            for (int r = 0; r < 9; r++) {
-//                                for (int c = 0; c < 9; c++) {
-//                                    if (sudoku.getValueAt(r, c) == null) {
-//                                        save_matrix[r][c] = 0;
-//                                    } else {
-//                                        save_matrix[r][c] = Integer.parseInt(sudoku.getModel().getValueAt(r, c).toString());
-//                                    }
-//                                }
-//                            }
-//                        list.add(save_matrix);
-//                    }
                     JLabel saved_as = new JLabel();
 
                     public void choosingSlot1(ActionEvent choosing_slot1) {
                         String action = choosing_slot1.getActionCommand();
                         if (action.equals("Slot 1")) {
-//                            game.dispose();
-//                            new_game.setEnabled(true);
-//                            load_game.setEnabled(true);
                             try {
                                 File file = new File("sudoku1.txt");
                                 if (!file.exists()) {
@@ -377,15 +348,12 @@ public class Interface extends JFrame {
                                     for (int j = 0; j < sudoku.getColumnCount(); j++) {
                                         if (sudoku.getValueAt(i, j) == null || sudoku.getValueAt(i, j).toString().equals("")) {
                                             save_matrix[i][j] = "0";
-//                                            writer.write("0");
                                         } else {
                                             save_matrix[i][j] = sudoku.getModel().getValueAt(i, j).toString();
-//                                            writer.write(sudoku.getModel().getValueAt(i, j).toString());
                                         }
                                     }
 
                                 }
-//                                writer.write("\n");
                                 writer.write(Arrays.deepToString(save_matrix));
                                 writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(0)));
@@ -400,9 +368,6 @@ public class Interface extends JFrame {
                                 saved_as.setText("Saved as Slot 1");
 
 
-//                                writer.write(Arrays.deepToString(list.get(2)));
-
-//                                writer.close();
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
@@ -412,9 +377,6 @@ public class Interface extends JFrame {
                     public void choosingSlot2(ActionEvent choosing_slot2) {
                         String action = choosing_slot2.getActionCommand();
                         if (action.equals("Slot 2")) {
-//                            game.dispose();
-//                            new_game.setEnabled(true);
-//                            load_game.setEnabled(true);
                             try {
                                 File file = new File("sudoku2.txt");
                                 if (!file.exists()) {
@@ -426,15 +388,12 @@ public class Interface extends JFrame {
                                     for (int j = 0; j < sudoku.getColumnCount(); j++) {
                                         if (sudoku.getValueAt(i, j) == null || sudoku.getValueAt(i, j).toString().equals("")) {
                                             save_matrix[i][j] = "0";
-//                                            writer.write("0");
                                         } else {
                                             save_matrix[i][j] = sudoku.getModel().getValueAt(i, j).toString();
-//                                            writer.write(sudoku.getModel().getValueAt(i, j).toString());
                                         }
                                     }
 
                                 }
-//                                writer.write("\n");
                                 writer.write(Arrays.deepToString(save_matrix));
                                 writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(0)));
@@ -447,10 +406,6 @@ public class Interface extends JFrame {
                                 fw.close();
 
                                 saved_as.setText("Saved as Slot 2");
-
-//                                writer.write(Arrays.deepToString(list.get(2)));
-
-//                                writer.close();
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
@@ -460,9 +415,6 @@ public class Interface extends JFrame {
                     public void choosingSlot3(ActionEvent choosing_slot3) {
                         String action = choosing_slot3.getActionCommand();
                         if (action.equals("Slot 3")) {
-//                            game.dispose();
-//                            new_game.setEnabled(true);
-//                            load_game.setEnabled(true);
                             try {
                                 File file = new File("sudoku3.txt");
                                 if (!file.exists()) {
@@ -474,15 +426,12 @@ public class Interface extends JFrame {
                                     for (int j = 0; j < sudoku.getColumnCount(); j++) {
                                         if (sudoku.getValueAt(i, j) == null || sudoku.getValueAt(i, j).toString().equals("")) {
                                             save_matrix[i][j] = "0";
-//                                            writer.write("0");
                                         } else {
                                             save_matrix[i][j] = sudoku.getModel().getValueAt(i, j).toString();
-//                                            writer.write(sudoku.getModel().getValueAt(i, j).toString());
                                         }
                                     }
 
                                 }
-//                                writer.write("\n");
                                 writer.write(Arrays.deepToString(save_matrix));
                                 writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(0)));
@@ -496,9 +445,6 @@ public class Interface extends JFrame {
 
                                 saved_as.setText("Saved as Slot 3");
 
-//                                writer.write(Arrays.deepToString(list.get(2)));
-
-//                                writer.close();
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
@@ -508,9 +454,6 @@ public class Interface extends JFrame {
                     public void choosingSlot4(ActionEvent choosing_slot4) {
                         String action = choosing_slot4.getActionCommand();
                         if (action.equals("Slot 4")) {
-//                            game.dispose();
-//                            new_game.setEnabled(true);
-//                            load_game.setEnabled(true);
                             try {
                                 File file = new File("sudoku4.txt");
                                 if (!file.exists()) {
@@ -522,15 +465,12 @@ public class Interface extends JFrame {
                                     for (int j = 0; j < sudoku.getColumnCount(); j++) {
                                         if (sudoku.getValueAt(i, j) == null || sudoku.getValueAt(i, j).toString().equals("")) {
                                             save_matrix[i][j] = "0";
-//                                            writer.write("0");
                                         } else {
                                             save_matrix[i][j] = sudoku.getModel().getValueAt(i, j).toString();
-//                                            writer.write(sudoku.getModel().getValueAt(i, j).toString());
                                         }
                                     }
 
                                 }
-//                                writer.write("\n");
                                 writer.write(Arrays.deepToString(save_matrix));
                                 writer.write(";");
                                 writer.write(Arrays.deepToString(list.get(0)));
@@ -543,10 +483,6 @@ public class Interface extends JFrame {
                                 fw.close();
 
                                 saved_as.setText("Saved as Slot 4");
-
-//                                writer.write(Arrays.deepToString(list.get(2)));
-
-//                                writer.close();
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
@@ -557,7 +493,6 @@ public class Interface extends JFrame {
                         String action = save_game.getActionCommand();
                         if (action.equals("Save Game")) {
                             t.stop();
-//                            Save();
 
 
                             JFrame save_screen = new JFrame("Choose slot");
@@ -671,17 +606,8 @@ public class Interface extends JFrame {
                                     temp=temp.replace(",","");
                                     temp=temp.replace("]","");
                                     temp=temp.replace(" ","");
-//                                    game = new JFrame("Sudoku - Easy");
-//                                    timeLf = 0;
-//                                    CreateGameWindow();
-//                                    for (int i = 0; i < 9; i++) {
-//                                        for (int j = 0; j < 9; j++) {
-//                                        System.out.print("\t" + sudoku[i][j]);
-//                                        if (sudok[i][j] != 0) {
-//                                            table.getModel().setValueAt(matrix[i][j], i, j);
                                     System.out.println(temp);
 
-//                                    list.get(0)=loadList.get(0) costam
                                 }
 //
                             } catch (FileNotFoundException fnfe) {
@@ -691,8 +617,6 @@ public class Interface extends JFrame {
                                         JOptionPane.ERROR_MESSAGE);
                             }
                         } catch (IOException ioe) {
-//                    System.out.println(ex.getMessage());
-//                }
                             JOptionPane.showMessageDialog(load_screen,
                                     ioe.getMessage(),
                                     "Error",
@@ -718,9 +642,6 @@ public class Interface extends JFrame {
                                 temp=temp.replace(",","");
                                 temp=temp.replace("]","");
                                 temp=temp.replace(" ","");
-//                            Integer temp = Integer.valueOf(loadList.get(1));
-//                        recordsList.remove(1);
-//                            records_dict.put(temp, loadList);
                                 System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
@@ -730,8 +651,6 @@ public class Interface extends JFrame {
                                     JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (IOException ioe) {
-//                    System.out.println(ex.getMessage());
-//                }
                         JOptionPane.showMessageDialog(load_screen,
                                 ioe.getMessage(),
                                 "Error",
@@ -751,15 +670,11 @@ public class Interface extends JFrame {
                             while ((st = br.readLine()) != null) {
                                 System.out.println(Arrays.toString(st.split(";")));
                                 List<String> loadList = Arrays.asList(st.split(";"));
-//                                    List<String> loadList_temp = new ArrayList<>();
                                 String temp;
                                 temp=loadList.get(0).replace("[","");
                                 temp=temp.replace(",","");
                                 temp=temp.replace("]","");
                                 temp=temp.replace(" ","");
-//                            Integer temp = Integer.valueOf(loadList.get(1));
-//                        recordsList.remove(1);
-//                            records_dict.put(temp, loadList);
                                 System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
@@ -769,7 +684,6 @@ public class Interface extends JFrame {
                                     JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (IOException ioe) {
-//                    System.out.println(ex.getMessage());
 //                }
                         JOptionPane.showMessageDialog(load_screen,
                                 ioe.getMessage(),
@@ -790,15 +704,11 @@ public class Interface extends JFrame {
                             while ((st = br.readLine()) != null) {
                                 System.out.println(Arrays.toString(st.split(";")));
                                 List<String> loadList = Arrays.asList(st.split(";"));
-//                                    List<String> loadList_temp = new ArrayList<>();
                                 String temp;
                                 temp=loadList.get(0).replace("[","");
                                 temp=temp.replace(",","");
                                 temp=temp.replace("]","");
                                 temp=temp.replace(" ","");
-//                            Integer temp = Integer.valueOf(loadList.get(1));
-//                        recordsList.remove(1);
-//                            records_dict.put(temp, loadList);
                                 System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
@@ -808,8 +718,6 @@ public class Interface extends JFrame {
                                     JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (IOException ioe) {
-//                    System.out.println(ex.getMessage());
-//                }
                         JOptionPane.showMessageDialog(load_screen,
                                 ioe.getMessage(),
                                 "Error",
@@ -849,18 +757,11 @@ public class Interface extends JFrame {
                     }
 
                 } catch (IOException ioe) {
-//                    System.out.println(ex.getMessage());
-//                }
                     JOptionPane.showMessageDialog(records_list,
                             ioe.getMessage(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
-//                List<Integer> employeeByKey = new ArrayList<>(records_dict.keySet());
-//                Collections.sort(employeeByKey);
-
-//                java.util.List<Integer> records_sorted = new ArrayList<Integer>(records_dict.values());
-//                Collections.sort(records_sorted);
                 JTable recordsTable = new JTable(6, 3);
                 recordsTable.setEnabled(false);
                 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -877,12 +778,6 @@ public class Interface extends JFrame {
                 }
                 recordsTable.setRowHeight(70);
                 recordsTable.setCellSelectionEnabled(false);
-//                System.out.println(records_sorted);
-//                for (int i = 1; i < 6; i++) {
-//                    for (int j = 0; j < 3; j++) {
-//                        recordsTable.getModel().setValueAt(records_sorted.get(), i, j);
-//                    }
-//                }
                 recordsTable.getModel().setValueAt("Nick:", 0, 0);
                 recordsTable.getModel().setValueAt("Score:", 0, 1);
                 recordsTable.getModel().setValueAt("Date:", 0, 2);
@@ -960,16 +855,6 @@ public class Interface extends JFrame {
         solution.add(panel2);
         solution.setVisible(true);
     }
-
-    //    public void changeFont(){
-//        JTextField text_field1 = new JTextField();
-//        Font font = new Font("Arial", Font.BOLD, 30);
-//        text_field1.setFont(font);
-//        text_field1.setForeground(Color.RED);
-//        text_field1.setHorizontalAlignment(JTextField.CENTER);
-//        DefaultCellEditor customCellEditor = new DefaultCellEditor(text_field1);
-//
-//    }
     public void generateSudoku() {
         if (q > 0) {
             list.clear();
