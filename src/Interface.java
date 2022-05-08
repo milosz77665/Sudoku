@@ -115,7 +115,7 @@ public class Interface extends JFrame {
                             CreateGameWindow();
                         } else if (choose_difficulty.getSelectedItem() == "Hard") {
                             difficulty_int = choose_difficulty.getSelectedIndex();
-                            timeLf=300000;
+                            timeLf = 300000;
                             game = new JFrame("Sudoku - Hard");
                             CreateGameWindow();
                         }
@@ -298,8 +298,8 @@ public class Interface extends JFrame {
                                         date = new Date();
                                     }
                                     try {
-                                        BufferedWriter record = new BufferedWriter(new FileWriter("records.txt",true));
-                                        record.write("\n"+nickname + ";" + points + ";" + formatter.format(date));
+                                        BufferedWriter record = new BufferedWriter(new FileWriter("records.txt", true));
+                                        record.write("\n" + nickname + ";" + points + ";" + formatter.format(date));
                                         record.close();
                                     } catch (IOException ioException) {
                                         ioException.printStackTrace();
@@ -332,6 +332,7 @@ public class Interface extends JFrame {
                             }
                         }
                     }
+
                     JLabel saved_as = new JLabel();
 
                     public void choosingSlot1(ActionEvent choosing_slot1) {
@@ -562,8 +563,6 @@ public class Interface extends JFrame {
                 slot_1.setActionCommand("slot1");
 
 
-
-
                 JButton slot_2 = new JButton("Slot 2");
                 slot_2.setBounds(75, 150, 150, 50);
                 load_screen.add(slot_2);
@@ -590,40 +589,40 @@ public class Interface extends JFrame {
             }
 
             private void Slot1(ActionEvent actionEvent) {
-                    String action = actionEvent.getActionCommand();
-                    if (action.equals("slot1")) {
-                        File file = new File("sudoku1.txt");
+                String action = actionEvent.getActionCommand();
+                if (action.equals("slot1")) {
+                    File file = new File("sudoku1.txt");
+                    try {
                         try {
-                            try {
-                                BufferedReader br = new BufferedReader(new FileReader(file));
-                                String st;
-                                while ((st = br.readLine()) != null) {
-                                    System.out.println(Arrays.toString(st.split(";")));
-                                    List<String> loadList = Arrays.asList(st.split(";"));
+                            BufferedReader br = new BufferedReader(new FileReader(file));
+                            String st;
+                            while ((st = br.readLine()) != null) {
+                                System.out.println(Arrays.toString(st.split(";")));
+                                List<String> loadList = Arrays.asList(st.split(";"));
 //                                    List<String> loadList_temp = new ArrayList<>();
-                                    String temp;
-                                    temp=loadList.get(0).replace("[","");
-                                    temp=temp.replace(",","");
-                                    temp=temp.replace("]","");
-                                    temp=temp.replace(" ","");
-                                    System.out.println(temp);
+                                String temp;
+                                temp = loadList.get(0).replace("[", "");
+                                temp = temp.replace(",", "");
+                                temp = temp.replace("]", "");
+                                temp = temp.replace(" ", "");
+                                System.out.println(temp);
 
-                                }
-//
-                            } catch (FileNotFoundException fnfe) {
-                                JOptionPane.showMessageDialog(load_screen,
-                                        fnfe.getMessage(),
-                                        "Error",
-                                        JOptionPane.ERROR_MESSAGE);
                             }
-                        } catch (IOException ioe) {
+//
+                        } catch (FileNotFoundException fnfe) {
                             JOptionPane.showMessageDialog(load_screen,
-                                    ioe.getMessage(),
+                                    fnfe.getMessage(),
                                     "Error",
                                     JOptionPane.ERROR_MESSAGE);
                         }
+                    } catch (IOException ioe) {
+                        JOptionPane.showMessageDialog(load_screen,
+                                ioe.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 }
+            }
 
             private void Slot2(ActionEvent actionEvent) {
                 String action = actionEvent.getActionCommand();
@@ -638,10 +637,10 @@ public class Interface extends JFrame {
                                 List<String> loadList = Arrays.asList(st.split(";"));
 //                                    List<String> loadList_temp = new ArrayList<>();
                                 String temp;
-                                temp=loadList.get(0).replace("[","");
-                                temp=temp.replace(",","");
-                                temp=temp.replace("]","");
-                                temp=temp.replace(" ","");
+                                temp = loadList.get(0).replace("[", "");
+                                temp = temp.replace(",", "");
+                                temp = temp.replace("]", "");
+                                temp = temp.replace(" ", "");
                                 System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
@@ -671,10 +670,10 @@ public class Interface extends JFrame {
                                 System.out.println(Arrays.toString(st.split(";")));
                                 List<String> loadList = Arrays.asList(st.split(";"));
                                 String temp;
-                                temp=loadList.get(0).replace("[","");
-                                temp=temp.replace(",","");
-                                temp=temp.replace("]","");
-                                temp=temp.replace(" ","");
+                                temp = loadList.get(0).replace("[", "");
+                                temp = temp.replace(",", "");
+                                temp = temp.replace("]", "");
+                                temp = temp.replace(" ", "");
                                 System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
@@ -705,10 +704,10 @@ public class Interface extends JFrame {
                                 System.out.println(Arrays.toString(st.split(";")));
                                 List<String> loadList = Arrays.asList(st.split(";"));
                                 String temp;
-                                temp=loadList.get(0).replace("[","");
-                                temp=temp.replace(",","");
-                                temp=temp.replace("]","");
-                                temp=temp.replace(" ","");
+                                temp = loadList.get(0).replace("[", "");
+                                temp = temp.replace(",", "");
+                                temp = temp.replace("]", "");
+                                temp = temp.replace(" ", "");
                                 System.out.println(temp);
                             }
                         } catch (FileNotFoundException fnfe) {
@@ -727,9 +726,7 @@ public class Interface extends JFrame {
             }
 
 
-
         });
-
 
 
         //Records - tablica rekoródw
@@ -855,6 +852,7 @@ public class Interface extends JFrame {
         solution.add(panel2);
         solution.setVisible(true);
     }
+
     public void generateSudoku() {
         if (q > 0) {
             list.clear();
